@@ -1,10 +1,14 @@
 const express = require('express')
 const axios = require('axios')
+const https = require('https')
+const http = require('http')
+const fs = require('fs')
 
 const app = express()
-const port = 10001
+const port1 = 10001
+const port2 = 10002
 
-// 查看请求内容
+// middleware
 app.use((req, res, next) => {
   // console.log(req)
   const queryInfo = req.query
@@ -42,13 +46,30 @@ app.use((req, res, next) => {
   }
 })
 
-app.listen(port, () => {
-  console.log('listening on port:', port)
+
+// credentials 
+const credentials = {
+    key: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.key'),
+    cert: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.cer')
+};
+
+// listen both http & https servers
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(port1, () => {
+    console.log('HTTP Server running on port', port1);
+})
+
+httpsServer.listen(port2, () => {
+    console.log('HTTPS Server running on port', port2);
 })
 
 
+
+// transform html to word
 function htmlSplit(html) {
-  let store, words, res, rawData
+  let store
   let obj = {}
 
   store = html.match(/[^\d\W]+/g)
@@ -57,16 +78,5 @@ function htmlSplit(html) {
       obj[store[i]] = obj[store[i]] ? obj[store[i]] + 1 : 1  
   }
 
-  // words = Object.keys(obj).sort((a, b) => obj[b] - obj[a])
-
-  // res = words.map(x => {
-  //     let o ={}
-  //     o[x] = obj[x]
-  //     return o
-  // })
-
-  // console.log(res)
-  // console.log('\nWords 解析完成')
-  
   return obj
 }

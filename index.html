@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/main.css">
+    <link rel="icon" href="./assets/logo.png" type="image/png">
+    <title>Words</title>
+</head>
+<body>
+    <header>
+        <h1 class="col">Words</h1>
+    </header>
+    <div class="container-fluid" id="words">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="input-group mb-3">
+                    <input type="text" value="https://nodejs.org/en/docs/" class="form-control input-url" placeholder=" " aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <!-- <input type="text" class="form-control input-url" placeholder=" " aria-label="Recipient's username" aria-describedby="button-addon2"> -->
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="search-btn">Go</button>
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <!-- <br> -->
+                    <h4>History</h4>
+                    <a href="#">
+                        <li class="list-group-item">https://nodejs.org/en/docs/</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item">Morbi leo risus</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </a>
+                </ul>
+            </div>
+            <div class="col-xl-9">
+                <div class="btn-group-toggle row" data-toggle="buttons">
+                    <label class="btn btn-success col-4 mx-auto">
+                        <input type="checkbox" checked autocomplete="off"> Result
+                    </label>
+                    <label class="btn btn-danger col-2 mx-auto">
+                        <input type="checkbox" checked autocomplete="off"> Forgot
+                    </label>
+                    <label class="btn btn-warning col-2 mx-auto">
+                        <input type="checkbox" checked autocomplete="off"> A little
+                    </label>
+                    <label class="btn btn-info col-2 mx-auto">
+                        <input type="checkbox" checked autocomplete="off"> Remember
+                    </label>
+                </div>
+
+                
+                <br>
+                <h4>Words</h4>
+                <div class="row">
+                    <div class="col col-xl-5">
+                        <!-- <button type="button" class="btn btn-success col">Result</button> -->
+                        <!-- <div class="row">
+                            <div class="col">Words</div>
+                            <div class="col">W</div>
+                            <div class="col">Frequency</div>
+                            <div class="col">Forget</div>
+                            <div class="col">A bit</div>
+                            <div class="col">Rm</div>
+                        </div>
+                        <nav class="nav">
+                                <a class="nav-link active" href="#">Words</a>
+                                <a class="nav-link" href="#">Frequency</a>
+                                <a class="nav-link" href="#">Forget</a>
+                                <a class="nav-link disabled" href="#">A bit</a>
+                                <a class="nav-link disabled" href="#">Rm</a>
+                        </nav> -->
+                        
+                        <ul class="list-group list-res">
+                            <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                                How
+                                <span class="badge badge-primary badge-pill">F</span>
+                                <span class="badge badge-primary badge-pill">L</span>
+                                <span class="badge badge-primary badge-pill">R</span>
+                                <span class="badge badge-primary badge-pill">14</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Are
+                                <span class="badge badge-primary badge-pill">2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                You
+                                <span class="badge badge-primary badge-pill">1</span>
+                            </li> -->
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <!-- <button type="button" class="btn btn-danger col">Forgot</button> -->
+                        
+                        <ul class="list-group list-forgot">
+                            <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                                How
+                                <span class="badge badge-primary badge-pill">L</span>
+                                <span class="badge badge-primary badge-pill">R</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Are
+                                <span class="badge badge-primary badge-pill">2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                You
+                                <span class="badge badge-primary badge-pill">1</span>
+                            </li> -->
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <!-- <button type="button" class="btn btn-warning col">A bit</button> -->
+                        
+                        <ul class="list-group list-a-little">
+                            <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                                How
+                                <span class="badge badge-primary badge-pill">F</span>
+                                <span class="badge badge-primary badge-pill">R</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Are
+                                <span class="badge badge-primary badge-pill">2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                You
+                                <span class="badge badge-primary badge-pill">1</span>
+                            </li> -->
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <!-- <button type="button" class="btn btn-info col">Remember</button> -->
+                        
+                        <ul class="list-group list-remember">
+                            <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                                How
+                                <span class="badge badge-primary badge-pill">F</span>
+                                <span class="badge badge-primary badge-pill">L</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Are
+                                <span class="badge badge-primary badge-pill">2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                You
+                                <span class="badge badge-primary badge-pill">1</span>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>

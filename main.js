@@ -87,7 +87,6 @@ function render (el, ary, leftCls, leftOne, rightCls, rightOne) {
 
 
 active = {
-  'search-btn': getData,
   'to-forgot': removeItem.bind(null, 'to-forgot'),
   'to-a-little': removeItem.bind(null, 'to-a-little'),
   'to-remember': removeItem.bind(null, 'to-remember'),
@@ -97,54 +96,46 @@ active = {
 words.addEventListener('click', e => {
   // debugger
   // console.log(e.target)
-  let idName = e.target.id
-  let className = e.target.classList[3]
+  // let idName = e.target.id
+  let className = e.target.classList[0]
 
   // debugger
-  if (active[idName]) {
-    active[idName](e.target)
-  } else if (active[className]) {
+  if (active[className]) {
     active[className](e.target)
   }
   // active[clsName](e.target)
+})
 
+searchBtn.addEventListener('click', e => {
+  getData()
 })
 
 // 点击 searchBtn 获取数据 
-function getData() {
+async function  getData() {
   let frequency = []
   let url = inputUrl.value
+  let words, data
+
+  await axios.get('http://localhost:10001/?q=' + 'http://localhost:8080/')
+    .then((res) => {
+      data = res.data
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
 
   // 测试代码
-  let words
-  let data = { words: 3, book: 5, eat: 1,words: 3, books: 5, ate: 1,word: 3, hi: 5, you: 1,me: 3, about: 5, and: 1, sleep: 3,sheep:8,dict:7 }
+  // let data = { words: 3, book: 5, eat: 1,words: 3, books: 5, ate: 1,word: 3, hi: 5, you: 1,me: 3, about: 5, and: 1, sleep: 3,sheep:8,dict:7 }
 
   // 拦截 以 过滤 存在 words
   let pureWords = filterWords(data)
-  // console.log(pureWords)
+  
   words = Object.keys(pureWords).sort((a, b) => pureWords[b] - pureWords[a])
-
   frequency = words.map(x => pureWords[x])
+
   console.log([words, frequency])
   appendDom([words, frequency])
-
-  // 暂时以固定 data测试代码
-  // let url = inputUrl.value
-
-  // jsonp(url, data => {
-  //     let frequency = [] 
-  //     let words, res
-
-  //     // 过滤 数字、空格等  
-  //     // res = filterWords(data)
-
-  //     words = Object.keys(data).sort((a, b) => data[b] - data[a])
-
-  //     frequency = words.map(x => data[x])
-
-  //     console.log([words, frequency])
-  //     appendDom([words, frequency])
-  // })
 }
 
 // 获取数据后对比 本地 过滤
@@ -193,12 +184,13 @@ function appendDom(dict) {
 
     s += `<li class="list-group-item d-flex justify-content-between align-items-center">
             <strong>${dict[0][i]}</strong>
-            <span class="badge badge-primary badge-pill to-forgot">F</span>
-            <span class="badge badge-primary badge-pill to-a-little">L</span>
-            <span class="badge badge-primary badge-pill to-remember">R</span>
+            <span class="to-forgot cat-word rpos3">F</span>
+            <span class="to-a-little cat-word rpos2">L</span>
+            <span class="to-remember cat-word rpos1">R</span>
             <span class="badge badge-primary badge-pill">${dict[1][i]}</span></li>`
-  }
-
+          }
+          // <span class="badge badge-primary badge-pill to-forgot cat-word">F</span>
+          
   listRes.innerHTML = s
 
 }
@@ -242,9 +234,11 @@ function removeItem(oper, el) {
 function word2html(word, leftCls, leftOne, rightCls, rightOne) {
   return `<li class="list-group-item d-flex justify-content-between align-items-center">
     <strong>${word}</strong>
-    <span class="badge badge-primary badge-pill ${leftCls}">${leftOne}</span>
-    <span class="badge badge-primary badge-pill ${rightCls}">${rightOne}</span></li>`
-}
+    <span class="${leftCls} cat-word pos2 ">${leftOne}</span>
+    <span class="${rightCls} cat-word pos1">${rightOne}</span></li>`
+  }
+  // <span class="badge badge-primary badge-pill ${leftCls} cat-word">${leftOne}</span>
+  // <span class="badge badge-primary badge-pill ${rightCls} cat-word">${rightOne}</span></li>`
 
 // banner tips
 document.getElementsByClassName('banner')[0].innerHTML = 
@@ -252,29 +246,3 @@ document.getElementsByClassName('banner')[0].innerHTML =
   'English is the essential Language of the Internet',
   'Learning English Can Make You Smarter',
   'English Makes Your Life More Entertaining'][Date.now() % 4]
-
-
-console.log(document.getElementsByClassName('banner').innerHTML)
-
-// jsonp 封装
-function jsonp(inpUrl, callback) {
-  // 随机生成全局属性名
-  let callbackName = '_JSONP_' + Math.random().toString(32).slice(2)
-
-  // 配置url
-
-  // http://vps.iceeweb.com:10001/?q=https://github.com/ices1?tab=repositories
-  url = searchDomain + '/?q=' + inpUrl + '&callback=' + callbackName
-
-  // 函数指向,删除全局变量,删除script标签
-  window[callbackName] = data => {
-    callback(data)
-    delete window[callbackName]
-    tag.parentNode.removeChild(tag)
-  }
-
-  // 创建 script 并加入body 
-  let tag = document.createElement('script')
-  tag.src = url
-  document.body.appendChild(tag)
-}

@@ -11,23 +11,24 @@
     <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
     <title>Can I Read</title>
 </head>
-<body>
-    <header>
-        <h1 class="col page-title">Can I Read</h1>
+<body class="container-fluid">
+    <header class="row">
+        <h1 class="col-xl-4 page-title ">Can I Read</h1>
+        
+        <div class="col-xl-8 input-group mb-3 page-input">
+                <input type="text" value="https://nodejs.org/en/docs/" class="form-control input-url" placeholder=" " aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-light" type="button" id="search-btn">Go</button>
+                </div>
+            </div>
     </header>
     <div class="container-fluid" id="words">
         <div class="row">
             <div class="col-xl-3">
-                <div class="input-group mb-3">
-                    <input type="text" value="https://nodejs.org/en/docs/" class="form-control input-url" placeholder=" " aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <!-- <input type="text" class="form-control input-url" placeholder=" " aria-label="Recipient's username" aria-describedby="button-addon2"> -->
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="search-btn">Go</button>
-                    </div>
-                </div>
-                <div class="mt-4 mb-5">
+                <div class=" mb-5">
                     <h4>Tips:</h4>
-                    <p class="text-secondary ml-3">The more you use, the better the effect！</p>
+                    <p class="text-secondary">The more you use, the better the effect！</p>
+                    <p class="banner text-secondary"> English Opens New Career Opportunities</p>
                 </div>
 
                 <div class="message">
@@ -43,17 +44,17 @@
                         <p class="ml-3  message-info">
                             <span>Forgot： </span>
                             <span class="forgot-words text-primary">0</span>
-                            <span> 个 </span>
+                            <span> 's </span>
                         </p>
                         <p class="ml-3  message-info">
                             <span> A bit：  </span>
                             <span class="a-bit-words text-primary">0</span>
-                            <span> 个 </span>
+                            <span> 's </span>
                         </p>
                         <p class="ml-3  message-info">
                             <span> Remember：  </span>
                             <span class="remember-words text-primary">0</span>
-                            <span> 个</span>
+                            <span> 's</span>
                         </p>
                         <p class="mt-2">
                             <span> Recognition Rate: </span>
@@ -64,26 +65,6 @@
                 </div>
             </div>
             <div class="col-xl-9">
-                <!-- <div class="btn-group-toggle row" data-toggle="buttons">
-                    <label class="btn btn-success col-4 mx-auto">
-                        <input type="checkbox" checked autocomplete="off"> Result
-                    </label>
-                    <label class="btn btn-danger col-2 mx-auto">
-                        <input type="checkbox" checked autocomplete="off"> Forgot
-                    </label>
-                    <label class="btn btn-warning col-2 mx-auto">
-                        <input type="checkbox" checked autocomplete="off"> A little
-                    </label>
-                    <label class="btn btn-info col-2 mx-auto">
-                        <input type="checkbox" checked autocomplete="off"> Remember
-                    </label>
-                </div> -->
-
-                
-                <!-- <br> -->
-                <div>
-                    <p  class="banner mt-0 mb-4 text-center text-secondary"> English Opens New Career Opportunities</p>
-                </div>
                 <h3>Words</h3>
                 <div class="row">
                     <div class="col col-xl-5">

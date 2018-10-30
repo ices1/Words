@@ -1,12 +1,25 @@
 const express = require('express')
 const axios = require('axios')
-const https = require('https')
 const http = require('http')
 const fs = require('fs')
 
 const app = express()
-const port1 = 10001
-const port2 = 10002
+const port = 10001
+
+//设置跨域访问
+app.all('*', (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+    res.header("Access-Control-Allow-Methods","POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+
+    // 设置前端携带可访问 cookies
+    // res.header("Access-Control-Allow-Origin", 'http://localhost:8080')
+    // res.header("Access-Control-Allow-Origin", 'http://localhost:8080; http://127.0.0.1:8080; http://bbs2.iceeweb.com')
+    res.header("Access-Control-Allow-Credentials", true)
+    next();
+});
 
 // middleware
 app.use((req, res, next) => {
@@ -49,23 +62,18 @@ app.use((req, res, next) => {
 
 // credentials 
 const credentials = {
-    key: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.key'),
-    cert: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.cer')
+    // key: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.key'),
+    // cert: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.cer')
 };
 
-// listen both http & https servers
-const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-
-httpServer.listen(port1, () => {
-    console.log('HTTP Server running on port', port1);
-})
-
-httpsServer.listen(port2, () => {
-    console.log('HTTPS Server running on port', port2);
-})
+// const httpServer = http.createServer(credentials, app);
 
 
+// httpServer.listen(port, () => {
+//     console.log('HTTP Server running on port', port);
+// })
+
+app.listen(port, () => {console.log('fjdslkjfldsjfdsjf')})
 
 // transform html to word
 function htmlSplit(html) {

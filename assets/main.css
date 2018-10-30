@@ -1,3 +1,12 @@
 header {
     /* background: rgb(220, 226, 131); */
 }
+.message-info{
+    margin: -.13rem 0
+}
+.message {
+    display: none;
+    box-shadow: 2px 2px 5px #aaa;
+    border-radius: 1rem;
+    padding: .5rem;
+}

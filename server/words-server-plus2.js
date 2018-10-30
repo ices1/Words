@@ -1,7 +1,6 @@
 const express = require('express')
 const axios = require('axios')
 const https = require('https')
-const http = require('http')
 const fs = require('fs')
 
 const app = express()
@@ -10,8 +9,8 @@ const port2 = 10002
 
 // middleware
 app.use((req, res, next) => {
-  // console.log(req)
   const queryInfo = req.query
+  // console.log(req)
   if (queryInfo.q) {
     try {
       // debugger
@@ -54,10 +53,9 @@ const credentials = {
 };
 
 // listen both http & https servers
-const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(port1, () => {
+app.listen(port1, () => {
     console.log('HTTP Server running on port', port1);
 })
 
@@ -73,11 +71,8 @@ function htmlSplit(html) {
   let obj = {}
 
   store = html.match(/[^\d\W]+/g)
-  // store=['abc', 'abc', 'eat', 'book']
 
   for(let i = 0, len = store.length; i < len; i++) {
-
-    // obj={abc: 2, eat:1, book:1}
       obj[store[i]] = obj[store[i]] ? obj[store[i]] + 1 : 1  
   }
 

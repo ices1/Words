@@ -118,9 +118,13 @@ function getData() {
   // 测试代码
   let words
   let data = { words: 3, book: 5, eat: 1,words: 3, books: 5, ate: 1,word: 3, hi: 5, you: 1,me: 3, about: 5, and: 1, sleep: 3,sheep:8,dict:7 }
-  words = Object.keys(data).sort((a, b) => data[b] - data[a])
 
-  frequency = words.map(x => data[x])
+  // 拦截 以 过滤 存在 words
+  let pureWords = filterWords(data)
+  // console.log(pureWords)
+  words = Object.keys(pureWords).sort((a, b) => pureWords[b] - pureWords[a])
+
+  frequency = words.map(x => pureWords[x])
   console.log([words, frequency])
   appendDom([words, frequency])
 
@@ -141,22 +145,42 @@ function getData() {
   //     console.log([words, frequency])
   //     appendDom([words, frequency])
   // })
-
-  // 拦截 以存在 words
-  filterWords(data)
 }
 
 // 获取数据后对比 本地 过滤
 function filterWords(words) {
-  debugger
+  // debugger
+  // 对照记录
   let reps = {f:0, l: 0, r: 0}
+  let count = 0
+  let rawCount = 0
+  let obj ={}
   for(let i in words) {
+    rawCount++
     let it = pullStore[i]
     if(it) {
       reps[it]++
+      count++
+    } else {
+      obj[i] = words[i]
     }
   }
+
+  let = sugTmp = ["Come on...", "Keep going...", "That's Good", "Wow, It's Great!", "That's Awsome 0_0 "]
+  let rate = 100 * count / rawCount
   console.log(2222222222,reps)
+  document.getElementsByClassName('')
+  document.getElementsByClassName('raw-words')[0].innerText = rawCount
+  document.getElementsByClassName('total-words')[0].innerText = count
+  document.getElementsByClassName('forgot-words')[0].innerText = reps.f
+  document.getElementsByClassName('a-bit-words')[0].innerText = reps.l
+  document.getElementsByClassName('remember-words')[0].innerText = reps.r
+  document.getElementsByClassName('total-rate')[0].innerText = rate.toFixed(2)
+  document.getElementsByClassName('msg-sug')[0].innerText = sugTmp[(rate / 20.01 |0)]
+  document.getElementsByClassName('message')[0].classList.add('message-show')
+
+  // console.log('objjjjjjjjj',obj)
+  return obj
 }
 
 // 动态生成 dom 加入 url

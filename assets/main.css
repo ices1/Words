@@ -1,12 +1,26 @@
-header {
-    /* background: rgb(220, 226, 131); */
+.page-title{
+    height: 4rem;
+    line-height: 4rem;
+    /* text-shadow: 2px 2px 5px; */
+    /* border-bottom: 2px solid #1111; */
+    /* padding: 1rem 0; */
+
 }
 .message-info{
     margin: -.13rem 0
 }
 .message {
-    display: none;
+    opacity: 0;
+    height: 0;
+    /* transform:translate3d(0, -5px, 0); */
     box-shadow: 2px 2px 5px #aaa;
     border-radius: 1rem;
     padding: .5rem;
+    margin: .5rem 0;
+    transition: .3s;
+}
+.message-show {
+    height: 18.5rem;
+    opacity: 1;
+    transform:translate3d(0, .3rem, 0);
 }

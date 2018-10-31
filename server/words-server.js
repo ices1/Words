@@ -21,6 +21,9 @@ app.all('*', (req, res, next) => {
     next();
 });
 
+
+app.use(express.static(path.join(__dirname, '../')))
+
 // middleware
 app.use((req, res, next) => {
   // console.log(req)

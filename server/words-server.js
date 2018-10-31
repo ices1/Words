@@ -26,12 +26,13 @@ app.all('*', (req, res, next) => {
 app.use(express.static(path.join(__dirname, '../')))
 
 // middleware
-app.use((req, res, next) => {
-  // console.log(req)
-  const queryInfo = req.query
-  if (queryInfo.q) {
+app.get('/api/:url', (req, res, next) => {
+  console.log('req')
+  console.log(req)
+  let url = req.params.url
+  if (url) {
       // debugger
-      axios.get(queryInfo.q)
+      axios.get(url)
         .then((response) => {
           console.log('响应成功： ', response.status)
           // console.log(response)

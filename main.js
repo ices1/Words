@@ -141,8 +141,8 @@ async function  getData() {
   
   // console.log(searchDomain + '/?q=' + url)
 
-  // await axios.get('http://localhost:10001/?q=' + 'http://localhost:8080/')
-  await axios.get(searchDomain + '/?q=' + url)
+  await axios.get('/api/' + url)
+  // await axios.get(searchDomain + '/?q=' + url)
     .then((res) => {
       if (res.data.status === 'failed') {
         // console.log(res)

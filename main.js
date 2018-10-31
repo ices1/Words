@@ -11,40 +11,19 @@ let toRemember = document.querySelector('.to-remember')
 let tipsWrap = document.querySelector('.tips-wrap')
 
 // let searchDomain = 'https://vps.iceeweb.com:10002'
-let searchDomain = 'http://vps.iceeweb.com:10001'
+let searchDomain = 'http://words.iceeweb.com:10001'
 let active
 
 
-// import {pullStore, pushStore} from './store.js'
+import {pullStore, pushStore, delStore} from './model/store.js'
+import {bannerMsg, scoreMsg} from './model/msg.js'
 
 
 // 初始化 store 到 Dom
 // let pullStore = JSON.parse(localStorage.getItem('words')) || {}
 
-// 测试 样本用例 store
-let pullStore = JSON.parse(localStorage.getItem('words')) || {You: "r",
-api: "r",badge: "r",bit: "r",button: "r",class: "r",content: "r",crossorigin: "l",
-div: "f",js: "l",justify: "r",latest: "r",li: "l",link: "f",message: "l",meta: "l",
-msg: "r",name: "l",nodejs: "r",org: "f",script: "l",static: "l",text: "r",xl: "l"}
 
-
-// 更新 Dom 元素 到 Store
-let pushStore = (word, status) => {
-  let store = JSON.parse(localStorage.getItem('words')) || {}
-  store[word] = status
-  localStorage.setItem('words', JSON.stringify(store))
-}
-let delStore = (word) => {
-  console.log(word)
-  let store = JSON.parse(localStorage.getItem('words')) || {}
-  console.log(store)
-  delete store[word]
-  localStorage.setItem('words', JSON.stringify(store))
-  console.log(store)
-}
-console.log(0000, pullStore)
-// console.log(pushStore)
-// ---------------------//----------------
+console.log(pullStore)
 
 // 初始化 sotre列 dom
 ;(() => {
@@ -63,9 +42,9 @@ function storeCat() {
   
   for (let it in words) {
     let cat = words[it]
-    if (cat === 'f') {
+    if (cat === 'H') {
       forList.push(it)
-    } else if (cat === 'l') {
+    } else if (cat === 'M') {
       litList.push(it)
     } else {
       remList.push(it)
@@ -79,16 +58,16 @@ function updataStoreToDom(obj) {
   for (let kind in obj) {
     switch (kind) {
       case 'litList':
-        // [leftCls, leftOne, rightCls, rightOne] = ['to-forgot', 'F', 'to-remember', 'R']
-        render(listALittle, obj[kind], 'to-forgot', 'F', 'to-remember', 'R')
+        // [leftCls, leftOne, rightCls, rightOne] = ['to-forgot', 'H', 'to-remember', 'E']
+        render(listALittle, obj[kind], 'to-forgot', 'H', 'to-remember', 'E')
         break
       case 'forList':
-        // [leftCls, leftOne, rightCls, rightOne] = ['to-a-little', 'L', 'to-remember', 'R']
-        render(listForgot, obj[kind], 'to-a-little', 'L', 'to-remember', 'R')
+        // [leftCls, leftOne, rightCls, rightOne] = ['to-a-little', 'M', 'to-remember', 'E']
+        render(listForgot, obj[kind], 'to-a-little', 'M', 'to-remember', 'E')
         break
       case 'remList':
-        // [leftCls, leftOrightOnene, rightCls, ] = ['to-forgot', 'F', 'to-a-little', 'L']
-        render(listRemember, obj[kind], 'to-forgot', 'F', 'to-a-little', 'L')
+        // [leftCls, leftOrightOnene, rightCls, ] = ['to-forgot', 'H', 'to-a-little', 'M']
+        render(listRemember, obj[kind], 'to-forgot', 'H', 'to-a-little', 'M')
         break
     }
   }
@@ -121,6 +100,7 @@ words.addEventListener('click', e => {
 })
 
 searchBtn.addEventListener('click', e => {
+  loading()
   getData()
 })
 inputUrl.addEventListener('keyup', e => {
@@ -157,9 +137,8 @@ words.addEventListener('dblclick', e => {
 
 // 点击 searchBtn 获取数据 
 async function  getData() {
-  let frequency = []
   let url = inputUrl.value
-  let words, data
+  
   console.log(searchDomain + '/?q=' + url)
 
   // await axios.get('http://localhost:10001/?q=' + 'http://localhost:8080/')
@@ -170,9 +149,11 @@ async function  getData() {
         document.getElementsByClassName('message')[0].classList.add('message-show')
         document.getElementsByClassName('message')[0].innerText = res.data.msg
         document.getElementsByClassName('message')[0].style.color = 'red'
+        rmLoading()
       } else {
         console.log(res)
         wordSort(res.data)
+        rmLoading()
       }
     })
     .catch(err => {
@@ -185,6 +166,8 @@ async function  getData() {
 
 function wordSort(data) {
 
+  let frequency = []
+  let words
   // 拦截 以 过滤 存在 words
   let pureWords = filterWords(data)
   
@@ -199,7 +182,7 @@ function wordSort(data) {
 function filterWords(words) {
   // debugger
   // 对照记录
-  let reps = {f:0, l: 0, r: 0}
+  let reps = {H:0, M: 0, E: 0}
   let count = 0
   let rawCount = 0
   let obj ={}
@@ -214,22 +197,24 @@ function filterWords(words) {
     }
   }
 
-  let = sugTmp = ["Come on...", "Keep going...", "That's Good", "Wow, It's Great!", "That's Awsome 0_0 "]
-  let rate = 100 * count / rawCount
-  console.log(2222222222,reps)
-  document.getElementsByClassName('')
-  document.getElementsByClassName('raw-words')[0].innerText = rawCount
-  document.getElementsByClassName('total-words')[0].innerText = count
-  document.getElementsByClassName('forgot-words')[0].innerText = reps.f
-  document.getElementsByClassName('a-bit-words')[0].innerText = reps.l
-  document.getElementsByClassName('remember-words')[0].innerText = reps.r
-  document.getElementsByClassName('total-rate')[0].innerText = rate.toFixed(2)
-  document.getElementsByClassName('msg-sug')[0].innerText = sugTmp[(rate / 20.01 |0)]
-  document.getElementsByClassName('message')[0].classList.add('message-show')
-
+  // let sugTmp = ["Come on...", "Keep going...", "That's Good", "Wow, It's Great!", "That's Awsome 0_0 "]
+  // let paseRate = 100 * count / rawCount
+  // console.log(2222222222,reps)
+  // document.getElementsByClassName('raw-words')[0].innerText = rawCount
+  // document.getElementsByClassName('total-words')[0].innerText = count
+  // document.getElementsByClassName('forgot-words')[0].innerText = reps.H
+  // document.getElementsByClassName('a-bit-words')[0].innerText = reps.M
+  // document.getElementsByClassName('remember-words')[0].innerText = reps.E
+  // document.getElementsByClassName('total-rate')[0].innerText = paseRate.toFixed(2)
+  // document.getElementsByClassName('msg-sug')[0].innerText = sugTmp[(paseRate / 20.01 |0)]
+  // document.getElementsByClassName('message')[0].classList.add('message-show')
+  
   // console.log('objjjjjjjjj',obj)
+  // 发送 成绩到 score Message
+  scoreMsg(rawCount, count, reps.H, reps.M, reps.E)
   return obj
 }
+
 
 // 动态生成 dom 加入 url
 function appendDom(dict) {
@@ -241,9 +226,9 @@ function appendDom(dict) {
 
     s += `<li class="list-group-item d-flex justify-content-between align-items-center">
             <strong class='word-item'>${dict[0][i]}</strong>
-            <span class="to-forgot cat-word rpos3">F</span>
-            <span class="to-a-little cat-word rpos2">L</span>
-            <span class="to-remember cat-word rpos1">R</span>
+            <span class="to-forgot cat-word rpos3">H</span>
+            <span class="to-a-little cat-word rpos2">M</span>
+            <span class="to-remember cat-word rpos1">E</span>
             <span class="badge badge-primary badge-pill">${dict[1][i]}</span></li>`
           }
           // <span class="badge badge-primary badge-pill to-forgot cat-word">F</span>
@@ -258,20 +243,20 @@ function removeItem(oper, el) {
   console.log('moving...')
 
   if (oper == 'to-forgot') {
-    [leftOne, rightOne, toEl, leftCls, rightCls] = ['L', 'R', listForgot, 'to-a-little', 'to-remember']
+    [leftOne, rightOne, toEl, leftCls, rightCls] = ['M', 'E', listForgot, 'to-a-little', 'to-remember']
 
     // 更新到 store
-    pushStore(el.parentNode.children[0].innerText, 'f')
+    pushStore(el.parentNode.children[0].innerText, 'H')
   } else if (oper == 'to-a-little') {
-    [leftOne, rightOne, toEl, leftCls, rightCls] = ['F', 'R', listALittle, 'to-forgot', 'to-remember']
+    [leftOne, rightOne, toEl, leftCls, rightCls] = ['H', 'E', listALittle, 'to-forgot', 'to-remember']
 
     // 更新到 store
-    pushStore(el.parentNode.children[0].innerText, 'l')
+    pushStore(el.parentNode.children[0].innerText, 'M')
   } else if (oper == 'to-remember') {
-    [leftOne, rightOne, toEl, leftCls, rightCls] = ['F', 'L', listRemember, 'to-forgot', 'to-a-little']
+    [leftOne, rightOne, toEl, leftCls, rightCls] = ['H', 'M', listRemember, 'to-forgot', 'to-a-little']
 
     // 更新到 store
-    pushStore(el.parentNode.children[0].innerText, 'r')
+    pushStore(el.parentNode.children[0].innerText, 'E')
   }
 
   word = el.parentNode.children[0].innerText
@@ -279,12 +264,6 @@ function removeItem(oper, el) {
   setTimeout(() => {
     el.parentNode.parentNode.removeChild(el.parentNode)
   }, 200);
-
-  // leftOne = oper == 'to-forgot' ? 'L' : 'F'
-  // rightOne = oper == 'to-remember' ? 'L' : 'R'
-  // toEl = oper == 'to-forgot' ? listForgot : toEl
-  // toEl = oper == 'to-a-little' ? listALittle : toEl
-  // toEl = oper == 'to-remember' ? listRemember : toEl
 
 
   toEl.innerHTML += word2html(word, leftCls, leftOne, rightCls, rightOne)
@@ -297,12 +276,18 @@ function word2html(word, leftCls, leftOne, rightCls, rightOne) {
     <span class="${leftCls} cat-word pos2 ">${leftOne}</span>
     <span class="${rightCls} cat-word pos1">${rightOne}</span></li>`
   }
-  // <span class="badge badge-primary badge-pill ${leftCls} cat-word">${leftOne}</span>
-  // <span class="badge badge-primary badge-pill ${rightCls} cat-word">${rightOne}</span></li>`
 
-// banner tips
-document.getElementsByClassName('banner')[0].innerHTML = 
-   ['English Opens New Career Opportunities',
-  'English is the essential Language of the Internet',
-  'Learning English Can Make You Smarter',
-  'English Makes Your Life More Entertaining'][Date.now() % 4]
+// banner tips 随机推送
+bannerMsg()
+
+// loading 事件
+function loading() {
+  document.querySelector('.wrap').classList.add('isloading')
+  document.querySelector('.loading-img').classList.add('loading-img-show')
+  searchBtn.disabled = true
+}
+function rmLoading() {
+  document.querySelector('.wrap').classList.remove('isloading')
+  document.querySelector('.loading-img').classList.remove('loading-img-show')
+  searchBtn.disabled = false
+}

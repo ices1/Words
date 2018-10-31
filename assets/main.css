@@ -80,6 +80,7 @@ header{
 }
 /* cat-word样式 */
 .cat-word {
+    font-family: 'Courier New',' Consolas', 'Menlo';
     cursor: pointer;
     color: #fff;
     background: #17a2b8;
@@ -132,4 +133,36 @@ header{
     margin: -.5rem;
     min-width: 4rem;
     /* background: #898; */
+}
+.isloading {
+    filter: blur(5px);
+}
+.loading-img{
+    display: none;
+    height: 3rem;
+    position: absolute;
+    top: 50vh;
+    left: 50%;    
+    transform: translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+.loading-img-show {
+    display: block;
+    animation:gogogo 1s infinite linear ;
+}
+
+@keyframes gogogo {
+    0%{
+        transform: translateX(-30px) rotate(0deg);
+        /* transform: rotate(-30deg); */
+        
+    }
+    50%{
+        transform: translateX(0px) rotate(720deg);
+        /* transform: rotate(30deg); */
+    }
+    100%{
+        transform: translateX(30px) rotate(1440deg);
+        /* transform: rotate(-30deg); */
+    }
 }

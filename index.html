@@ -9,12 +9,14 @@
     crossorigin="anonymous">
   <link rel="stylesheet" href="./assets/main.css">
   <!-- <link rel="stylesheet" href="./assets/bootstrap.min.css"> -->
-  <link rel="icon" href="./assets/logo.png" type="image/png">
+  <link rel="icon" href="./assets/loading.png" type="image/png">
   <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
   <title>Can I Read</title>
 </head>
 
 <body class="container-fluid">
+  <div class="wrap">
+    
   <header class="row">
     <h1 class="col-xl-4 page-title ">Can I Read</h1>
 
@@ -52,17 +54,17 @@
           </p>
           <p class=" message-info">Among them: </p>
           <p class="ml-3  message-info">
-            <span>Forgot： </span>
+            <span>Hard: </span>
             <span class="forgot-words text-primary">0</span>
             <span> 's </span>
           </p>
           <p class="ml-3  message-info">
-            <span> A little： </span>
+            <span> Middle： </span>
             <span class="a-bit-words text-primary">0</span>
             <span> 's </span>
           </p>
           <p class="ml-3  message-info">
-            <span> Remember： </span>
+            <span> Easy: </span>
             <span class="remember-words text-primary">0</span>
             <span> 's</span>
           </p>
@@ -84,19 +86,19 @@
             </ul>
           </div>
           <div class="col">
-            <button type="button" class="mb-1 btn btn-danger col">Forgot</button>
+            <button type="button" class="mb-1 btn btn-danger col">Hard</button>
             <ul class="list-group list-forgot">
               <!--  -->
             </ul>
           </div>
           <div class="col">
-            <button type="button" class="mb-1 btn btn-warning col">A little</button>
+            <button type="button" class="mb-1 btn btn-warning col">Middle</button>
             <ul class="list-group list-a-little">
               <!--  -->
             </ul>
           </div>
           <div class="col">
-            <button type="button" class="mb-1 btn btn-info col">Remember</button>
+            <button type="button" class="mb-1 btn btn-info col">Easy</button>
 
             <ul class="list-group list-remember">
               <!--  -->
@@ -106,8 +108,11 @@
       </div>
     </div>
   </div>
-  <script src="./main.js"></script>
-  <!-- <script type='module' src="./main.js"></script> -->
+  
+</div>
+<img class="loading-img" src="./assets/loading.png"/>
+  <!-- <script src="./main.js"></script> -->
+  <script type='module' src="./main.js"></script>
 </body>
 
 </html>

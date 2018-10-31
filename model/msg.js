@@ -24,8 +24,17 @@ function scoreMsg(rawCount, count, h, m, e) {
   document.getElementsByClassName('msg-sug')[0].innerText = sugTmp[(paseRate / 20.01 |0)]
   document.getElementsByClassName('message')[0].classList.add('message-show')
 }
+
+function netWorkError() {
+  let msg = 'Request server response failed, please check the link entered below'
+
+  document.getElementsByClassName('message')[0].classList.add('message-show')
+  document.getElementsByClassName('message')[0].innerText = msg
+  document.getElementsByClassName('message')[0].style.color = 'red'
+}
 // 常规输出
 export {
     bannerMsg,
-    scoreMsg
+    scoreMsg,
+    netWorkError
 }

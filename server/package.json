@@ -2,6 +2,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "https": "^1.0.0",
+    "path": "^0.12.7",
     "querystring": "^0.2.0"
   }
 }

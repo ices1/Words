@@ -16,19 +16,19 @@ let active
 
 
 import {pullStore, pushStore, delStore} from './model/store.js'
-import {bannerMsg, scoreMsg} from './model/msg.js'
+import {bannerMsg, scoreMsg, netWorkError} from './model/msg.js'
 
 
 // 初始化 store 到 Dom
 // let pullStore = JSON.parse(localStorage.getItem('words')) || {}
 
 
-console.log(pullStore)
+// console.log(pullStore)
 
 // 初始化 sotre列 dom
 ;(() => {
   let storeObj = storeCat()
-  console.log(111111111,storeObj)
+  // console.log(111111111,storeObj)
   updataStoreToDom(storeObj)
   document.querySelector('.tips-cnt').classList.add('tips-cnt-show')
 })()
@@ -112,7 +112,7 @@ inputUrl.addEventListener('keyup', e => {
 tipsWrap.addEventListener('click', e => {
   
   let flag = document.querySelector('.tips-cnt-show')
-  console.log(flag)
+  // console.log(flag)
   if (!flag) {
     document.querySelector('.tips-cnt').classList.add('tips-cnt-show')
   } else {
@@ -139,25 +139,25 @@ words.addEventListener('dblclick', e => {
 async function  getData() {
   let url = inputUrl.value
   
-  console.log(searchDomain + '/?q=' + url)
+  // console.log(searchDomain + '/?q=' + url)
 
   // await axios.get('http://localhost:10001/?q=' + 'http://localhost:8080/')
   await axios.get(searchDomain + '/?q=' + url)
     .then((res) => {
       if (res.data.status === 'failed') {
-        console.log(res)
-        document.getElementsByClassName('message')[0].classList.add('message-show')
-        document.getElementsByClassName('message')[0].innerText = res.data.msg
-        document.getElementsByClassName('message')[0].style.color = 'red'
+        // console.log(res)
+        netWorkError()
         rmLoading()
       } else {
-        console.log(res)
+        // console.log(res)
         wordSort(res.data)
         rmLoading()
       }
     })
     .catch(err => {
-      console.log(err)
+      netWorkError()
+      rmLoading()
+      // console.log(err)
     })
 
   // 测试代码
@@ -174,7 +174,7 @@ function wordSort(data) {
   words = Object.keys(pureWords).sort((a, b) => pureWords[b] - pureWords[a])
   frequency = words.map(x => pureWords[x])
 
-  console.log([words, frequency])
+  // console.log([words, frequency])
   appendDom([words, frequency])
 }
 

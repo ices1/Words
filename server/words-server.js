@@ -3,6 +3,7 @@ const axios = require('axios')
 // const http = require('http')
 const fs = require('fs')
 const path = require('path')
+const bodyParser = require('body-parser')
 
 const app = express()
 const port = 10001
@@ -24,41 +25,26 @@ app.all('*', (req, res, next) => {
 
 
 app.use(express.static(path.join(__dirname, '../')))
+app.use(bodyParser.urlencoded())
 
-// middleware
-app.get('/api/:url', (req, res, next) => {
-  console.log('req')
-  console.log(req)
-  let url = req.params.url
-  if (url) {
-      // debugger
-      axios.get(url)
-        .then((response) => {
-          console.log('响应成功： ', response.status)
-          // console.log(response)
-          res.jsonp(htmlSplit(response.data))
-        })
-        .catch((e) => {
-          console.log('响应失败： ', e.status)
-          res.send({
+app.post('/url', async (req, res, next) => {
+  // console.log(req.body)
+  let url = req.body.url
+    // debugger
+    await axios.get(url)
+      .then((response) => {
+        console.log('响应成功： ', response.status)
+        // console.log(response)
+        res.jsonp(htmlSplit(response.data))
+      })
+      .catch((e) => {
+        console.log('响应失败： ', e.response)
+        res.send({
 
-              status: 'failed',
-              msg: 'Request server response failed, please check the link entered below'
-            })
-            
-          // if (e.response) {
-          //   res.jsonp({
-          //     status: e.response .status,
-          //     msg: e.message
-          //   })
-          // } else {
-          //   res.jsonp({
-          //     status: 400,
-          //     msg: '请求服务器响应失败'
-          //   })
-          // }
-        })
-  }
+            status: 'failed',
+            msg: 'Request server response failed, please check the link entered below'
+          })
+      })
 })
 
 

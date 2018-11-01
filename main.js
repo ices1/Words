@@ -18,7 +18,6 @@ let active
 import {pullStore, pushStore, delStore} from './model/store.js'
 import {bannerMsg, scoreMsg, netWorkError} from './model/msg.js'
 
-
 // 初始化 store 到 Dom
 // let pullStore = JSON.parse(localStorage.getItem('words')) || {}
 
@@ -141,9 +140,10 @@ async function  getData() {
   
   // console.log(searchDomain + '/?q=' + url)
 
-  await axios.get('/api/' + url)
+  await axios.post('/url', Qs.stringify({url}))
   // await axios.get(searchDomain + '/?q=' + url)
     .then((res) => {
+      console.res
       if (res.data.status === 'failed') {
         // console.log(res)
         netWorkError()

@@ -1,6 +1,6 @@
 // 测试 样本用例 store
 let pullStore = (function(){
-  let sotre, catchSt, tmp
+  let store, catchSt, tmp
 
   tmp = {You: "E", api: "E",badge: "E",bit: "E",button: "E",class: "E", crossorigin: "M",
   div: "H",js: "M",justify: "E",latest: "E",li: "M",link: "H",message: "M",meta: "M",
@@ -12,10 +12,10 @@ let pullStore = (function(){
     store = tmp
     localStorage.setItem('words', JSON.stringify(store))
   } else {
-    sotre = catchSt
+    store = catchSt
   }
 
-  return sotre
+  return store
 })()
 
 

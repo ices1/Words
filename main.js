@@ -244,9 +244,9 @@ function appendDom(dict) {
 
     s += `<li class="list-group-item d-flex justify-content-between align-items-center">
             <strong class='word-item'>${dict[0][i]}</strong>
-            <span class="to-forgot cat-word rpos3">H</span>
-            <span class="to-a-little cat-word rpos2">M</span>
-            <span class="to-remember cat-word rpos1">E</span>
+            <div class='cat-sec'><span class="to-forgot cat-word">H</span>
+            <span class="to-a-little cat-word">M</span>
+            <span class="to-remember cat-word">E</span></div>
             <span class="badge badge-primary badge-pill">${dict[1][i]}</span></li>`
           }
           // <span class="badge badge-primary badge-pill to-forgot cat-word">F</span>
@@ -264,23 +264,23 @@ function removeItem(oper, el) {
     [leftOne, rightOne, toEl, leftCls, rightCls] = ['M', 'E', listForgot, 'to-a-little', 'to-remember']
 
     // 更新到 store
-    pushStore(el.parentNode.children[0].innerText, 'H')
+    pushStore(el.parentNode.parentNode.children[0].innerText, 'H')
   } else if (oper == 'to-a-little') {
     [leftOne, rightOne, toEl, leftCls, rightCls] = ['H', 'E', listALittle, 'to-forgot', 'to-remember']
 
     // 更新到 store
-    pushStore(el.parentNode.children[0].innerText, 'M')
+    pushStore(el.parentNode.parentNode.children[0].innerText, 'M')
   } else if (oper == 'to-remember') {
     [leftOne, rightOne, toEl, leftCls, rightCls] = ['H', 'M', listRemember, 'to-forgot', 'to-a-little']
 
     // 更新到 store
-    pushStore(el.parentNode.children[0].innerText, 'E')
+    pushStore(el.parentNode.parentNode.children[0].innerText, 'E')
   }
 
-  word = el.parentNode.children[0].innerText
-  el.parentNode.classList.add('remove-item')
+  word = el.parentNode.parentNode.children[0].innerText
+  el.parentNode.parentNode.classList.add('remove-item')
   setTimeout(() => {
-    el.parentNode.parentNode.removeChild(el.parentNode)
+    el.parentNode.parentNode.parentNode.removeChild(el.parentNode.parentNode)
   }, 200);
 
 
@@ -291,8 +291,10 @@ function removeItem(oper, el) {
 function word2html(word, leftCls, leftOne, rightCls, rightOne) {
   return `<li class="list-group-item d-flex justify-content-between align-items-center">
     <strong class='word-item'>${word}</strong>
-    <span class="${leftCls} cat-word pos2 ">${leftOne}</span>
-    <span class="${rightCls} cat-word pos1">${rightOne}</span></li>`
+    <div class='cat-sec'>
+    <span class="${leftCls} cat-word">${leftOne}</span>
+    <span class="${rightCls} cat-word">${rightOne}</span></li>
+    </div>`
   }
 
 // banner tips 随机推送

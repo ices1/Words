@@ -11,6 +11,7 @@ function bannerMsg() {
     console.log('ererything is ok...')
 }
 
+// 发送 单词成绩
 function scoreMsg(rawCount, count, h, m, e) {
   let sugTmp = ["Come on...", "Keep going...", "That's Good", "Wow, It's Great!", "That's Awsome 0_0 "]
   let paseRate = 100 * count / rawCount
@@ -24,7 +25,7 @@ function scoreMsg(rawCount, count, h, m, e) {
   document.getElementsByClassName('msg-sug')[0].innerText = sugTmp[(paseRate / 20.01 |0)]
   document.getElementsByClassName('message')[0].classList.add('message-show')
 }
-
+// 发送 单词获取失败时 信息
 function netWorkError() {
   let msg = 'Request server response failed, please check the link entered below'
 

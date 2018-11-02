@@ -1,8 +1,22 @@
 // 测试 样本用例 store
-let pullStore = JSON.parse(localStorage.getItem('words')) || {You: "E",
-api: "E",badge: "E",bit: "E",button: "E",class: "E",content: "E",crossorigin: "M",
-div: "H",js: "M",justify: "E",latest: "E",li: "M",link: "H",message: "M",meta: "M",
-msg: "E",name: "M",nodejs: "E",org: "H",script: "M",static: "M",text: "E",xl: "M"}
+let pullStore = (function(){
+  let sotre, catchSt, tmp
+
+  tmp = {You: "E", api: "E",badge: "E",bit: "E",button: "E",class: "E", crossorigin: "M",
+  div: "H",js: "M",justify: "E",latest: "E",li: "M",link: "H",message: "M",meta: "M",
+  msg: "E",name: "M",nodejs: "E",org: "H",script: "M",static: "M",text: "E",xl: "M"}
+
+  catchSt = JSON.parse(localStorage.getItem('words'))
+
+  if (!catchSt) {
+    store = tmp
+    localStorage.setItem('words', JSON.stringify(store))
+  } else {
+    sotre = catchSt
+  }
+
+  return sotre
+})()
 
 
 // 更新 Dom 元素 到 Store

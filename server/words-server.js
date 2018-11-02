@@ -4,21 +4,27 @@ const axios = require('axios')
 const fs = require('fs')
 const path = require('path')
 const bodyParser = require('body-parser')
-
+const sqlite = require('sqlite')
 const app = express()
 const port = 10001
+let db
+
+const dbPromise = sqlite.open(path.join(__dirname, './words.db'), { Promise })
+
+// 批量获取单词
+// async function getDb(ary) {
+//   // }大小写敏感
+//   // let res = await db.all(`SELECT word, translation FROM dict WHERE word in (${'"' + ary.join('","') + '"'})`);
+//   let res = await db.all(`SELECT word, translation FROM dict WHERE word 
+//     in (${'"' + ary.join('","') + '"'}) collate nocase`);
+//   // console.log('\ngetDb:\n', res)
+//   return res
+// }
+
 
 //设置跨域访问
 app.all('*', (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
-    // res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-    // res.header("Access-Control-Allow-Methods","POST,GET,DELETE,OPTIONS");
-    // res.header("X-Powered-By",' 3.2.1')
-    // res.header("Content-Type", "application/json;charset=utf-8");
-
-    // 设置前端携带可访问 cookies
-    // res.header("Access-Control-Allow-Origin", 'http://localhost:8080')
-    // res.header("Access-Control-Allow-Origin", 'http://localhost:8080; http://127.0.0.1:8080; http://bbs2.iceeweb.com')
     res.header("Access-Control-Allow-Credentials", true)
     next();
 });
@@ -30,21 +36,26 @@ app.use(bodyParser.urlencoded())
 app.post('/url', async (req, res, next) => {
   // console.log(req.body)
   let url = req.body.url
-    // debugger
     await axios.get(url)
-      .then((response) => {
+      .then(async (response) => {
         console.log('响应成功： ', response.status)
-        // console.log(response)
-        res.jsonp(htmlSplit(response.data))
+        let comDate = await htmlSplit(response.data)
+        res.send(comDate)
       })
       .catch((e) => {
-        console.log('响应失败： ', e.response)
+        console.dir(e)
+        // console.log('响应失败： ', e)
         res.send({
-
             status: 'failed',
             msg: 'Request server response failed, please check the link entered below'
           })
       })
+})
+
+app.get('/api/:word', async (req, res, next) => {
+  let w = req.params.word
+  let data = await db.get('SELECT translation FROM dict WHERE word = ? collate nocase', w)
+  res.send(data)
 })
 
 
@@ -54,28 +65,59 @@ const credentials = {
     // cert: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.cer')
 };
 
-// const httpServer = http.createServer(credentials, app);
 
+ // 启动监听，读取数据库
+ ;(async function() {
+   db = await dbPromise
+   // httpsServer.listen(port2, () => console.log('server is listening on port', port2))
+   app.listen(port, () => console.log('server is listening on port', port))
+ }())
 
-// httpServer.listen(port, () => {
-//     console.log('HTTP Server running on port', port);
-// })
-
-app.listen(port, () => {console.log('listening on port: ', port)})
 
 // transform html to word
+// async function htmlSplit(html) {
 function htmlSplit(html) {
-  let store
+  let store, desc, freq
   let obj = {}
 
   store = html.match(/[^\d\W]+/g)
   // store=['abc', 'abc', 'eat', 'book']
 
   for(let i = 0, len = store.length; i < len; i++) {
-
     // obj={abc: 2, eat:1, book:1}
-      obj[store[i]] = obj[store[i]] ? obj[store[i]] + 1 : 1  
+      w = store[i].toLowerCase()
+      obj[w] = obj[w] ? obj[w] + 1 : 1  
   }
 
   return obj
+
+  // Frequency
+  // freq = Object.keys(obj)
+  // console.log('freq.length', freq.length)
+
+  // Desc
+  // desc = await getDb(freq)
+  // desc = await getDb(['book','love','see','like'])
+  // console.log(desc)
+
+  // return compositeDate(obj, desc)
 }
+
+// 组合词频，词意
+// function compositeDate(freq, desc) {
+//   let res = {}
+
+//   for(let i in desc) {
+//     desc
+//     res[i] = {f: freq[i], d: desc[i]}
+//   }
+
+//   for(let i=0, l = desc.length; i < l; i++) {
+//     let w = desc[i].word
+
+//     res[w] = {f: freq[w], d: desc[i].translation}
+//   }
+
+//   console.log('\ncompsDate:\n',res)
+//   return res
+// }

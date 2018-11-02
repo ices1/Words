@@ -17,6 +17,8 @@ let active
 
 import {pullStore, pushStore, delStore} from './model/store.js'
 import {bannerMsg, scoreMsg, netWorkError} from './model/msg.js'
+import {balloons} from './model/mdfDom.js'
+// import {myDebounce} from './model/tools.js'
 
 // 初始化 store 到 Dom
 // let pullStore = JSON.parse(localStorage.getItem('words')) || {}
@@ -105,6 +107,7 @@ searchBtn.addEventListener('click', e => {
 inputUrl.addEventListener('keyup', e => {
   // console.log(e.keyCode)
   if (e.keyCode === 13) {
+    loading()
     getData()
   }
 })
@@ -117,6 +120,19 @@ tipsWrap.addEventListener('click', e => {
   } else {
     document.querySelector('.tips-cnt').classList.remove('tips-cnt-show')
   }
+})
+
+
+words.addEventListener('mouseover', e => {
+
+    // 在短暂的延时之后重置颜色
+    if (e.target.classList[0] === 'word-item') {
+      console.log(e.target)
+      let el = e.target
+      setTimeout(() => {
+        balloons(el.parentNode, el.innerText)
+      }, 500)
+    }
 })
 
 
@@ -134,6 +150,8 @@ words.addEventListener('dblclick', e => {
   }
 })
 
+
+
 // 点击 searchBtn 获取数据 
 async function  getData() {
   let url = inputUrl.value
@@ -143,13 +161,13 @@ async function  getData() {
   await axios.post('/url', Qs.stringify({url}))
   // await axios.get(searchDomain + '/?q=' + url)
     .then((res) => {
-      console.res
+      console.log(res)
       if (res.data.status === 'failed') {
-        // console.log(res)
+        // console.log('errrrrrror', res)
         netWorkError()
         rmLoading()
       } else {
-        // console.log(res)
+        // console.log('ooooooooook', res)
         wordSort(res.data)
         rmLoading()
       }
@@ -157,7 +175,7 @@ async function  getData() {
     .catch(err => {
       netWorkError()
       rmLoading()
-      // console.log(err)
+      // console.log('erroooooooor', err)
     })
 
   // 测试代码

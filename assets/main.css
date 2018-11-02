@@ -129,8 +129,8 @@ header{
 }
 .word-item {
     display: inline-block;
-    padding: .5rem;
-    margin: -.5rem;
+    padding: .5rem 1rem;
+    margin: -.5rem -1rem;
     min-width: 4rem;
     /* background: #898; */
 }

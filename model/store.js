@@ -36,8 +36,24 @@ let delStore = (word) => {
   console.log(store)
 }
 
+let pulltfOnline = () => localStorage.getItem('tfOnline')
+
+
+let changetfOnline = (chk) => {
+    if (chk.checked) {
+      localStorage.setItem('tfOnline', 'on')
+      // console.log('on')
+    } else {
+      localStorage.removeItem('tfOnline')
+      // console.log('off')
+    }
+}
+
+
 export {
     pullStore,
     pushStore,
-    delStore
+    delStore,
+    pulltfOnline,
+    changetfOnline
 }

@@ -44,16 +44,10 @@ header{
 }
 .tips-cnt:hover {
     border-left: 4px solid #17a2b8;
-    /* border-top: 2px solid #17a2b8; */
-    /* transform:translateY(1px) */
-    /* transform:translateY(3px); */
-    /* box-shadow: 2px 2px 5px #3333; */
-    /* transform: rotateX('3') */
 }
 .tips-cnt-show {
     opacity: .9;
-    /* display: block; */
-    height: 100%;
+    height: 13rem;
     transform:translate3d(0, 10px, 0);
 }
 /* message 消息类样式 */
@@ -139,6 +133,7 @@ header{
     padding: .5rem 1rem;
     margin: -.5rem -1rem;
     min-width: 4rem;
+    width: 100%;
     /* background: #898; */
 }
 .isloading {
@@ -173,3 +168,51 @@ header{
         /* transform: rotate(-30deg); */
     }
 }
+
+/* transfrom Online */
+input.tfOnline{
+    display: none;
+  }
+  label.tfOnline{
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    padding: 2px;
+    background: #ddd;
+    border-radius: 999px;
+    position: relative;
+    transition: .5s;
+    cursor: pointer;
+  }
+  label.tfOnline::after{
+    content: '';
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background-color: #fff;
+    left: 2px;
+    position: absolute;
+    box-shadow: 0 1px 2px #3337;
+    transition: .5s;
+  }
+  input.tfOnline:checked + label.tfOnline{
+    box-shadow: 0 0 0 17px  #6ddc5f inset;
+  }
+  input.tfOnline:checked + label.tfOnline::after{
+    left: 32px;
+  }
+h3 {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+.tfTitle{
+    font-size: 1rem;
+    top: -1rem;
+    position: relative;
+}
+.ftOnline-wrap{
+    position: absolute;
+    right: 0;
+    top: 0.25rem;
+}
+

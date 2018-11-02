@@ -15,12 +15,12 @@ let searchDomain = 'http://words.iceeweb.com:10001'
 let active
 
 
-import {pullStore, pushStore, delStore} from './model/store.js'
+import {pullStore, pushStore, delStore, pulltfOnline, changetfOnline} from './model/store.js'
 import {bannerMsg, scoreMsg, netWorkError} from './model/msg.js'
-import {balloons} from './model/mdfDom.js'
+import {balloons, debounce, byDebounceGet, isListenerWordsItem} from './model/ballMon.js'
 // import {myDebounce} from './model/tools.js'
 
-// 初始化 store 到 Dom
+// 初始化 store 到 Domm
 // let pullStore = JSON.parse(localStorage.getItem('words')) || {}
 
 
@@ -97,6 +97,13 @@ words.addEventListener('click', e => {
   // debugger
   if (active[className]) {
     active[className](e.target)
+  } else if (className === 'tfOnline' && e.target.tagName === "LABEL") {
+    setTimeout(() => {
+      changetfOnline(tfOnline)
+      // console.log(tfOnline.checked)
+      isListenerWordsItem(tfOnline.checked, words)
+    }, 0)
+    
   }
 })
 
@@ -123,17 +130,20 @@ tipsWrap.addEventListener('click', e => {
 })
 
 
-words.addEventListener('mouseover', e => {
 
-    // 在短暂的延时之后重置颜色
-    if (e.target.classList[0] === 'word-item') {
-      console.log(e.target)
-      let el = e.target
-      setTimeout(() => {
-        balloons(el.parentNode, el.innerText)
-      }, 500)
-    }
-})
+
+words.addEventListener('mouseover', byDebounceGet)
+
+// words.addEventListener('mouseover', debounce((e) => {
+//     // balloons 翻译
+//     if (e.target.classList[0] === 'word-item') {
+//       // console.log(e.target)
+//       let el = e.target
+//       console.log(el)
+//       balloons(el.parentNode, el.innerText)
+//     }
+//   }), 2000)
+
 
 
 words.addEventListener('dblclick', e => {
@@ -289,7 +299,7 @@ function removeItem(oper, el) {
 }
 
 function word2html(word, leftCls, leftOne, rightCls, rightOne) {
-  return `<li class="list-group-item d-flex justify-content-between align-items-center">
+  return `<li class="list-group-item d-flex justifmy-content-between align-items-center">
     <strong class='word-item'>${word}</strong>
     <div class='cat-sec'>
     <span class="${leftCls} cat-word">${leftOne}</span>

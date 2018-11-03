@@ -28,7 +28,7 @@ let byDebounceGet = debounce((e) => {
     let el = e.target
     if (el.classList[0] === 'word-item') {
       // console.log(e.target)
-      console.log(el)
+      // console.log(el)
       balloons(el.parentNode, el.innerText)
     }
   }
@@ -38,10 +38,10 @@ let byDebounceGet = debounce((e) => {
 function isListenerWordsItem(isTfOnline, words) {
   if (isTfOnline) {
 
-    console.log('add')
+    // console.log('add')
     words.addEventListener('mouseover', byDebounceGet)
   } else {
-    console.log('rm')
+    // console.log('rm')
     rmWordsTfOnline()
     words.removeEventListener('mouseover', byDebounceGet)
   }

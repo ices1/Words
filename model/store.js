@@ -28,23 +28,31 @@ let pushStore = (word, status) => {
 
 // 更新 Store 删除 item 
 let delStore = (word) => {
-  console.log(word)
+  // console.log(word)
   let store = JSON.parse(localStorage.getItem('words')) || {}
   console.log(store)
   delete store[word]
   localStorage.setItem('words', JSON.stringify(store))
-  console.log(store)
+  // console.log(store)
 }
 
-let pulltfOnline = () => localStorage.getItem('tfOnline')
+let pulltfOnline = () => {
+  let init = localStorage.getItem('tfOnline')
+  if (init) {
+    return init
+  } else {
+    localStorage.setItem('tfOnline', 'true')
+    return 'true'
+  }
+}
 
 
 let changetfOnline = (chk) => {
     if (chk.checked) {
-      localStorage.setItem('tfOnline', 'on')
+      localStorage.setItem('tfOnline', 'true')
       // console.log('on')
     } else {
-      localStorage.removeItem('tfOnline')
+      localStorage.setItem('tfOnline', 'false')
       // console.log('off')
     }
 }

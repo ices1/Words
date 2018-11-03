@@ -28,9 +28,14 @@ import {balloons, debounce, byDebounceGet, isListenerWordsItem} from './model/ba
 
 // 初始化 sotre列 dom
 ;(() => {
+  // 显示 缓存 words
   let storeObj = storeCat()
-  // console.log(111111111,storeObj)
   updataStoreToDom(storeObj)
+  // 根据缓存 Online 状态设定 开关
+  document.querySelector('#tfOnline').checked = (pulltfOnline() === 'true')
+  // 根据 Online 判断是否监听 words hover
+  isListenerWordsItem(tfOnline.checked, words)
+  // tips动画
   document.querySelector('.tips-cnt').classList.add('tips-cnt-show')
 })()
 
@@ -128,22 +133,6 @@ tipsWrap.addEventListener('click', e => {
     document.querySelector('.tips-cnt').classList.remove('tips-cnt-show')
   }
 })
-
-
-
-
-words.addEventListener('mouseover', byDebounceGet)
-
-// words.addEventListener('mouseover', debounce((e) => {
-//     // balloons 翻译
-//     if (e.target.classList[0] === 'word-item') {
-//       // console.log(e.target)
-//       let el = e.target
-//       console.log(el)
-//       balloons(el.parentNode, el.innerText)
-//     }
-//   }), 2000)
-
 
 
 words.addEventListener('dblclick', e => {
@@ -254,9 +243,9 @@ function appendDom(dict) {
 
     s += `<li class="list-group-item d-flex justify-content-between align-items-center">
             <strong class='word-item'>${dict[0][i]}</strong>
-            <div class='cat-sec'><span class="to-forgot cat-word">H</span>
+            <div class='cat-sec'><span class="to-remember cat-word">E</span>
             <span class="to-a-little cat-word">M</span>
-            <span class="to-remember cat-word">E</span></div>
+            <span class="to-forgot cat-word">H</span></div>
             <span class="badge badge-primary badge-pill">${dict[1][i]}</span></li>`
           }
           // <span class="badge badge-primary badge-pill to-forgot cat-word">F</span>
@@ -301,10 +290,8 @@ function removeItem(oper, el) {
 function word2html(word, leftCls, leftOne, rightCls, rightOne) {
   return `<li class="list-group-item d-flex justifmy-content-between align-items-center">
     <strong class='word-item'>${word}</strong>
-    <div class='cat-sec'>
-    <span class="${leftCls} cat-word">${leftOne}</span>
-    <span class="${rightCls} cat-word">${rightOne}</span></li>
-    </div>`
+    <div class='cat-sec'><span class="${rightCls} cat-word">${rightOne}</span>
+    <span class="${leftCls} cat-word">${leftOne}</span></li></div>`
   }
 
 // banner tips 随机推送

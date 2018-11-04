@@ -1,12 +1,13 @@
 const express = require('express')
 const axios = require('axios')
-// const http = require('http')
+const https = require('https')
 const fs = require('fs')
 const path = require('path')
 const bodyParser = require('body-parser')
 const sqlite = require('sqlite')
 const app = express()
 const port = 10001
+const port2 = 10002
 let db
 
 const dbPromise = sqlite.open(path.join(__dirname, './words.db'), { Promise })
@@ -61,15 +62,15 @@ app.get('/api/:word', async (req, res, next) => {
 
 // credentials 
 const credentials = {
-    // key: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.key'),
-    // cert: fs.readFileSync('/root/.acme.sh/vps.iceeweb.com/vps.iceeweb.com.cer')
+    key: fs.readFileSync('/root/.acme.sh/words.iceeweb.com/words.iceeweb.com.key'),
+    cert: fs.readFileSync('/root/.acme.sh/words.iceeweb.com/words.iceeweb.com.cer')
 };
 
 
  // 启动监听，读取数据库
  ;(async function() {
    db = await dbPromise
-   // httpsServer.listen(port2, () => console.log('server is listening on port', port2))
+   httpsServer.listen(port2, () => console.log('server is listening on port', port2))
    app.listen(port, () => console.log('server is listening on port', port))
  }())
 

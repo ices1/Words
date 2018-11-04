@@ -66,6 +66,7 @@ const credentials = {
     cert: fs.readFileSync('/root/.acme.sh/words.iceeweb.com/words.iceeweb.com.cer')
 };
 
+const httpsServer = https.createServer(credentials, app)
 
  // 启动监听，读取数据库
  ;(async function() {
